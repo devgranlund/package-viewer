@@ -1,0 +1,13 @@
+#####################
+### Project files ###
+#####################
+*.iml
+.idea
+out
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
