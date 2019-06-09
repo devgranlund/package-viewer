@@ -2,7 +2,10 @@
 Small program to list currently installed packages
 
 ### Build
-mvn package
+mvn clean package
 
 ### Run 
-java -cp target/package-viewer-1.0-SNAPSHOT.jar devgranlund.App
+
+## Dependencies and rationale
+### Undertow web server
+Modular, flexible and light-weight HTTP-server implementation.
