@@ -12,3 +12,6 @@ out
 log/
 target/
 dependency-reduced-pom.xml
+
+src/main/resources
+src/test/resources

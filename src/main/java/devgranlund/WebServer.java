@@ -28,7 +28,8 @@ public class WebServer {
                             server.stop();
                         }
                     })
-                    // Default handler
+                        
+                    // Root handler, show full package list
                     .addPrefixPath("/", new HttpHandler() {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
