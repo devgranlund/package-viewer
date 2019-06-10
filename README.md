@@ -1,5 +1,5 @@
 # package-viewer
-Small program to list currently installed packages
+Small program to list installed packages
 
 ### Build
 mvn clean package
