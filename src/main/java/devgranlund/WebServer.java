@@ -1,10 +1,14 @@
 package devgranlund;
 
+import devgranlund.service.PackageService;
+import devgranlund.ui.PackageListRenderer;
 import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import static io.undertow.Handlers.path;
+
+import java.util.List;
 
 /**
  * @author tuomas.granlund@gmail.com
@@ -33,8 +37,11 @@ public class WebServer {
                     .addPrefixPath("/", new HttpHandler() {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-                            exchange.getResponseSender().send("Package listing... \n");
+                            // TODO fix filename
+                            String html = PackageListRenderer.render(PackageService.getPackageNamesInList("status"));
+                            
+                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
+                            exchange.getResponseSender().send(html);
                         }
                     })
                 )

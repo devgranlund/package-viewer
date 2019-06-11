@@ -1,11 +1,10 @@
 package devgranlund.util;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,7 +28,7 @@ public class FileReader {
      * @return
      */
     protected List<String> getFileContentFromResoucesInList(){
-        List<String> lines = new ArrayList<>();
+        List<String> lines;
         Stream<String> stream = getFileContentFromResourcesInStream();
         lines = stream.collect(Collectors.toList());
         return lines;
@@ -38,16 +37,23 @@ public class FileReader {
     /**
      * Opens file from resources and returns it's contents in Stream. 
      * 
+     * FIXTHIS
+     * Note: is, r and br cannot be closed here. Closing one of these resources
+     * results stream to be closed. This might be caused by stream lazy processing?
+     * 
      * @return
      */
-    protected Stream<String> getFileContentFromResourcesInStream(){
+    public Stream<String> getFileContentFromResourcesInStream(){
         Stream<String> stream = null;
-        Path path;
         
         try {
-            path = Paths.get(Thread.currentThread().getContextClassLoader().getResource(fileName).toURI());
-            stream = Files.lines(path);
-        } catch (URISyntaxException | IOException exception){
+            
+            final InputStream is = getClass().getResourceAsStream("/" + fileName);
+            final Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+            final BufferedReader br = new BufferedReader(r);
+            stream = br.lines();
+            
+          } catch ( Exception exception){
             throw new RuntimeException("FileReader: file cannot be read");
         }
         

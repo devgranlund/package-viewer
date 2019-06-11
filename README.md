@@ -16,6 +16,13 @@ lsof -i:8080
 kill -9 *id
 
 ## Dependencies and rationale
+
+### JUnit test framework
+No need for rationale, right?
+
 ### Undertow web server
 Modular, flexible and light-weight HTTP-server implementation.  
 Too much work to do own implementation.
+
+## Future considerations
+1. FileReader - fix closing of resources
