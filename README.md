@@ -9,7 +9,7 @@ java -jar target/package-viewer-1.0-SNAPSHOT.jar
 
 ### HTTP API
 localhost:8080 - get package listing  
-localhost:8080/shutdown - shutdown the server
+localhost:8080/shutdown - shutdown the server  
 localhost:8080/packages/{packageName} - get details of one package
 
 ### Undertow unclean shutdown (Mac)
