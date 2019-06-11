@@ -37,7 +37,7 @@ public class FileReader {
     /**
      * Opens file from resources and returns it's contents in Stream. 
      * 
-     * FIXTHIS
+     * TODO fix this
      * Note: is, r and br cannot be closed here. Closing one of these resources
      * results stream to be closed. This might be caused by stream lazy processing?
      * 
