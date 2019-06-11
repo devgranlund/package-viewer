@@ -39,6 +39,9 @@ public class WebServer {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             String packageName = getPackageNameFromPath(exchange.getRequestPath());
                             
+                            // 1. package service palauttaa mapin domain olioita :)
+                            // 2. HTML-renderer luo sivun valitun domain olion tiedoista
+                            
                             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                             exchange.getResponseSender().send("Package: " + packageName + " \n");
 

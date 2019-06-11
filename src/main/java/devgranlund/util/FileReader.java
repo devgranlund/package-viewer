@@ -25,6 +25,8 @@ public class FileReader {
      * Opens file from resources and returns it's contents in List. 
      * One line in the file is one entry in the list. 
      * 
+     * @note Used only in test.
+     * 
      * @return
      */
     protected List<String> getFileContentFromResoucesInList(){
@@ -38,8 +40,8 @@ public class FileReader {
      * Opens file from resources and returns it's contents in Stream. 
      * 
      * TODO fix this
-     * Note: is, r and br cannot be closed here. Closing one of these resources
-     * results stream to be closed. This might be caused by stream lazy processing?
+     * @note is, r and br cannot be closed here. Closing one of these resources
+     * results stream to be closed. This might be because of stream lazy processing?
      * 
      * @return
      */
