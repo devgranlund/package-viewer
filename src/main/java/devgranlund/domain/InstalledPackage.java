@@ -1,32 +1,33 @@
 package devgranlund.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 /**
- * Domain class for installed package. 
+ * Domain class for installed package. Class is immutable. 
  * 
  * Design assumption is that the name of the package is unique in the OS context. 
  * 
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-11.
  */
-public class InstalledPackage implements Comparable {
+public final class InstalledPackage implements Comparable {
     
     // unique name
-    private String name;
+    private final String name;
     
-    private String description;
+    private final String description;
     
     // unique names
-    private Set<String> depends;
+    private final Set<String> depends;
     
     //private Set<String> dependentOn;
     
     public InstalledPackage(String name, String description, Set<String> depends){
         this.name = name;
         this.description = description;
-        this.depends = depends;
+        this.depends = new HashSet<>(depends);
     }
 
     public String getName() {
@@ -38,7 +39,7 @@ public class InstalledPackage implements Comparable {
     }
 
     public Set<String> getDepends() {
-        return depends;
+        return new HashSet<>(depends);
     }
 
     @Override
