@@ -2,6 +2,7 @@ package devgranlund.domain;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -24,10 +25,15 @@ public final class InstalledPackage implements Comparable {
     
     //private Set<String> dependentOn;
     
-    public InstalledPackage(String name, String description, Set<String> depends){
+    public InstalledPackage(String name, String description, Optional<Set<String>> dependsOptional){
         this.name = name;
         this.description = description;
-        this.depends = new HashSet<>(depends);
+        if (dependsOptional.isPresent()){
+            this.depends = new HashSet<>(dependsOptional.get());    
+        } else {
+            this.depends = new HashSet<>();
+        }
+        
     }
 
     public String getName() {
