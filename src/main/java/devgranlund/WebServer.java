@@ -1,12 +1,16 @@
 package devgranlund;
 
+import devgranlund.domain.InstalledPackage;
 import devgranlund.service.PackageService;
 import devgranlund.ui.PackageListRenderer;
+import devgranlund.ui.PackageRenderer;
 import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import static io.undertow.Handlers.path;
+
+import java.util.Map;
 
 /**
  * @author tuomas.granlund@gmail.com
@@ -38,12 +42,11 @@ public class WebServer {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             String packageName = getPackageNameFromPath(exchange.getRequestPath());
+                            InstalledPackage installedPackage = PackageService.getDomainModel(LOCAL_FILE_NAME).get(packageName);
+                            String html = PackageRenderer.render(installedPackage);
                             
-                            // 1. package service palauttaa mapin domain olioita :)
-                            // 2. HTML-renderer luo sivun valitun domain olion tiedoista
-                            
-                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-                            exchange.getResponseSender().send("Package: " + packageName + " \n");
+                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
+                            exchange.getResponseSender().send(html);
 
                         }
                     })

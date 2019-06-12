@@ -26,4 +26,10 @@ Modular, flexible and light-weight HTTP-server implementation.
 Too much work to do own implementation.
 
 ## Future considerations
-1. FileReader - fix closing of resources
+* FileReader - fix closing of resources
+* shutdown to HTML
+* functional interface to render-classes
+* bidirectional relationships
+* Vagrant with real package listing
+* PackageRendererTest
+* uppstart-job -> fails

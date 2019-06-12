@@ -19,7 +19,7 @@ public class PackageListRenderer {
         sb.append("<body>\n");
         sb.append("<h3>List of packages:</h3>\n");
         for (String packageName : packageNames){
-            sb.append("<a href=\"localhost:8080/packages/" 
+            sb.append("<a href=\"http://localhost:8080/packages/" 
                     + packageName 
                     + "\">"
                     + packageName

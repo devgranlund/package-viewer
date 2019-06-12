@@ -29,10 +29,10 @@ public class PackageListRendererTest {
                 "</head>\n" +
                 "<body>\n" +
                 "<h3>List of packages:</h3>\n" +
-                "<a href=\"localhost:8080/packages/java-commons\">java-commons</a><br/>\n" +
-                "<a href=\"localhost:8080/packages/less\">less</a><br/>\n" +
-                "<a href=\"localhost:8080/packages/man\">man</a><br/>\n" +
-                "<a href=\"localhost:8080/packages/python\">python</a><br/>\n" +
+                "<a href=\"http://localhost:8080/packages/java-commons\">java-commons</a><br/>\n" +
+                "<a href=\"http://localhost:8080/packages/less\">less</a><br/>\n" +
+                "<a href=\"http://localhost:8080/packages/man\">man</a><br/>\n" +
+                "<a href=\"http://localhost:8080/packages/python\">python</a><br/>\n" +
                 "</body>\n" +
                 "</html>", html);
     }

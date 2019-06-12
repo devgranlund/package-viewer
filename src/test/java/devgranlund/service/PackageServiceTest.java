@@ -3,9 +3,13 @@ package devgranlund.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import devgranlund.domain.InstalledPackage;
 
 /**
  * @author tuomas.granlund@gmail.com
@@ -13,17 +17,50 @@ import org.junit.Test;
  */
 public class PackageServiceTest {
     
+    private static final String TEST_FILE_NAME = "status";
+    
     @Test
     public void packageNamesListContainsLess(){
-        List<String> packages = PackageService.getPackageNamesInList("status");
+        List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME);
         Assert.assertTrue("package less can be found from list", packages.contains("less"));
     }
     
     @Test
     public void packageNamesListIsOrdered() {
-        List<String> packages = PackageService.getPackageNamesInList("status");
+        List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME);
         List tmp = new ArrayList(packages);
         Collections.sort(tmp);
         Assert.assertTrue("packageNamesList is ordered", tmp.equals(packages));        
+    }
+    
+    @Test
+    public void domainModelIsGenerated() {
+        Map<String, InstalledPackage> domainModel = getDomainModel();
+        Assert.assertNotNull("Domain model is not null", domainModel);
+        Assert.assertTrue("Domain model contains some data",domainModel.size() > 0);
+    }
+    
+    @Test
+    public void installedPackageRsyncIsGeneratedCorrectly() {
+        Map<String, InstalledPackage> domainModel = getDomainModel();
+        Assert.assertTrue("Domain model contains rsync", domainModel.containsKey("rsync"));
+        InstalledPackage ip = domainModel.get("rsync");
+        Assert.assertNotNull("InstalledPackage 'rsync' is not null", ip);
+        Assert.assertEquals("rsync", ip.getName());
+        Assert.assertEquals("fast, versatile, remote (and local) file-copying tool", ip.getDescription());
+    }
+    
+    @Test
+    public void dependsSetIsGeneratedCorrectly() {
+        String line = "Depends: libacl1 (>= 2.2.51-3), libc6 (>= 2.8), libpopt0 (>= 1.16), lsb-base (>= 3.2-14), base-files (>= 4.0.1)\n";
+        Set<String> depends = PackageService.generateDependsSetFromLine(line);
+        Assert.assertNotNull("Set is not null", depends);
+        Assert.assertEquals("Set contains 5 dependencies", 5, depends.size());
+        Assert.assertTrue("libc6 can be found from the Set", depends.contains("libc6"));
+    }
+    
+    // Helper-method for getting domainModel
+    private Map<String, InstalledPackage> getDomainModel(){
+        return PackageService.getDomainModel(TEST_FILE_NAME);
     }
 }
