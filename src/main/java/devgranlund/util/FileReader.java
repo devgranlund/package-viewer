@@ -10,6 +10,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * Class to read installed packages from the system. 
+ * 
+ * During the development and testing local resource file is used as a input. 
+ * The production version uses real file. 
+ * 
+ * From the view point of this class, the location of the file is dependency and
+ * this dependency is injected through constructor. 
+ * 
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-10.
  */
@@ -25,7 +33,7 @@ public class FileReader {
      * Opens file from resources and returns it's contents in List. 
      * One line in the file is one entry in the list. 
      * 
-     * @note Used only in test.
+     * @note Used only in testing.
      * 
      * @return
      */
@@ -43,7 +51,7 @@ public class FileReader {
      * @note is, r and br cannot be closed here. Closing one of these resources
      * results stream to be closed. This might be because of stream lazy processing?
      * 
-     * @return
+     * @return Stream object that contains text file lines as a content. 
      */
     public Stream<String> getFileContentFromResourcesInStream(){
         Stream<String> stream = null;

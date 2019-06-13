@@ -47,6 +47,12 @@ public final class InstalledPackage implements Comparable {
     public Set<String> getDepends() {
         return new HashSet<>(depends);
     }
+    
+    // TODO
+    // method to add package that depends on to this package. 
+    // should not mutate this object's state - should return new object with 
+    // updated values. 
+    
 
     @Override
     public boolean equals(Object o) {
