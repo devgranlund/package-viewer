@@ -11,7 +11,7 @@ import org.junit.Test;
  * @since 2019-06-10.
  */
 public class PackageListRendererTest {
-    
+
     @Test
     public void htmlIsRenderedCorrectly() {
         List<String> packageNames = new ArrayList<>();
@@ -19,7 +19,7 @@ public class PackageListRendererTest {
         packageNames.add("less");
         packageNames.add("man");
         packageNames.add("python");
-        
+
         String html = PackageListRenderer.render(packageNames);
         Assert.assertEquals("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -36,5 +36,5 @@ public class PackageListRendererTest {
                 "</body>\n" +
                 "</html>", html);
     }
-    
+
 }

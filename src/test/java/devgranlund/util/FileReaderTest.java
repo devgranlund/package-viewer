@@ -11,19 +11,19 @@ import org.junit.Test;
  * @since 2019-06-10.
  */
 public class FileReaderTest {
-    
+
     @Test
     public void fileCanBeReadFromResources() {
         FileReader fileReader = new FileReader("status");
         Stream<String> lines = fileReader.getFileContentFromResourcesInStream();
         Assert.assertNotNull("Stream containing the file cannot be null", lines);
     }
-    
+
     @Test
-    public void fileContainsSomeLines(){
+    public void fileContainsSomeLines() {
         FileReader fileReader = new FileReader("status");
         List<String> lines = fileReader.getFileContentFromResoucesInList();
         Assert.assertTrue("There's some lines in the list", lines.size() > 0);
     }
-    
+
 }

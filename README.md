@@ -34,5 +34,6 @@ Too much work to do own implementation.
 * ~~abstract base class for render-classes~~
 * Generate bidirectional relationships
 * Vagrant with real package listing
-* PackageRendererTest
+* ~~PackageRendererTest~~
 * ~~Fix uppstart-job --package -> fails~~
+* More tests, 100% line coverage :)

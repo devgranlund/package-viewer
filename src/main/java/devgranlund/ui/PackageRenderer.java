@@ -10,7 +10,7 @@ import devgranlund.domain.InstalledPackage;
  */
 public class PackageRenderer extends Renderer {
     public static String render(Map<String, InstalledPackage> domainModel, InstalledPackage installedPackage) {
-        if (installedPackage != null){
+        if (installedPackage != null) {
             return renderPackageView(domainModel, installedPackage);
         } else {
             StringBuilder sb = new StringBuilder();
@@ -21,23 +21,23 @@ public class PackageRenderer extends Renderer {
             return sb.toString();
         }
     }
-    
-    private static String renderPackageView(Map<String, InstalledPackage> domainModel, InstalledPackage installedPackage){
+
+    private static String renderPackageView(Map<String, InstalledPackage> domainModel, InstalledPackage installedPackage) {
         StringBuilder sb = new StringBuilder();
         sb.append(renderPageTop());
         sb.append("<h3>Package:</h3>\n");
         sb.append("Name: " + installedPackage.getName() + "<br/>");
         sb.append("Description: " + installedPackage.getDescription() + "<br/>");
         sb.append("Depends: ");
-        for (String packageName : installedPackage.getDepends()){
-            if (domainModel.containsKey(packageName)){
+        for (String packageName : installedPackage.getDepends()) {
+            if (domainModel.containsKey(packageName)) {
                 sb.append("<a href=\"http://localhost:8080/packages/"
                         + packageName
                         + "\">"
                         + packageName
-                        + "</a>&nbsp;");    
+                        + "</a>&nbsp;");
             } else {
-                sb.append(" <strike>" + packageName + "</strike> ");   
+                sb.append(" <strike>" + packageName + "</strike> ");
             }
         }
         sb.append("<br/><a href=\"http://localhost:8080\">All packages</a>");

@@ -17,8 +17,8 @@ import devgranlund.util.FileReader;
  * @since 2019-06-10.
  */
 public class PackageService {
-    
-    public static List<String> getPackageNamesInList (String fileName){
+
+    public static List<String> getPackageNamesInList(String fileName) {
         List<String> packageNames;
         final FileReader fileReader = new FileReader(fileName);
         Stream<String> stream = fileReader.getFileContentFromResourcesInStream();
@@ -29,65 +29,62 @@ public class PackageService {
                 .collect(Collectors.toList());
         return packageNames;
     }
-    
-    public static Map<String, InstalledPackage> getDomainModel (String fileName){
+
+    public static Map<String, InstalledPackage> getDomainModel(String fileName) {
         List<String> lines;
         final FileReader fileReader = new FileReader(fileName);
         Stream<String> stream = fileReader.getFileContentFromResourcesInStream();
         lines = stream
-                .filter(line -> 
+                .filter(line ->
                         line.startsWith("Package:")
-                        || 
-                        line.startsWith("Depends:")
-                        ||
-                        line.startsWith("Description:")
-                        || 
-                        line.length() == 0
-                        )
+                                ||
+                                line.startsWith("Depends:")
+                                ||
+                                line.startsWith("Description:")
+                                ||
+                                line.length() == 0
+                )
                 .collect(Collectors.toList());
-        
+
         Map<String, InstalledPackage> domainModel = new HashMap<>();
         String name = "";
         String description = "";
         Set<String> depends = new HashSet<>();
-        for (String line : lines){
-            if (line.startsWith("Package:")){
+        for (String line : lines) {
+            if (line.startsWith("Package:")) {
                 name = getDataFromLine(line);
-            } 
-            else if (line.startsWith("Description:")){
+            } else if (line.startsWith("Description:")) {
                 description = getDataFromLine(line);
-            } 
-            else if (line.startsWith("Depends:")){
+            } else if (line.startsWith("Depends:")) {
                 depends = generateDependsSetFromLine(line);
             }
             // end of "package object"
-            else if (line.length() == 0){
+            else if (line.length() == 0) {
                 domainModel.put(name, new InstalledPackage(name, description, Optional.of(depends)));
                 name = "";
                 description = "";
                 depends = new HashSet<>();
             }
         }
-        
+
         return domainModel;
     }
 
     /**
-     * Generates Set containing package names. 
-     * See param text line format from below. 
-     * 
-     * @param line
-     * - expected format: 'Depends: libacl1 (>= 2.2.51-3), libc6 (>= 2.8), libpopt0 (>= 1.16), lsb-base (>= 3.2-14), base-files (>= 4.0.1)\n'
+     * Generates Set containing package names.
+     * See param text line format from below.
+     *
+     * @param line - expected format: 'Depends: libacl1 (>= 2.2.51-3), libc6 (>= 2.8), libpopt0 (>= 1.16), lsb-base (>= 3.2-14), base-files (>= 4.0.1)\n'
      * @return Set with package names
      */
-    protected static Set<String> generateDependsSetFromLine(String line){
+    protected static Set<String> generateDependsSetFromLine(String line) {
         Set<String> depends = new HashSet<>();
         String data = getDataFromLine(line);
         String[] dirtyDependencies = data.split(",");
-        for (String dirty : dirtyDependencies){
+        for (String dirty : dirtyDependencies) {
             String[] finalDependencies = dirty.split("\\|");
-            for (String dependency : finalDependencies){
-                depends.add(dependency.trim().split(" ")[0]);    
+            for (String dependency : finalDependencies) {
+                depends.add(dependency.trim().split(" ")[0]);
             }
         }
         return depends;
@@ -95,22 +92,22 @@ public class PackageService {
 
     /**
      * Rationale to use colon as a separator:
-     * 
-     * "Each paragraph consists of a series of data fields. 
-     * Each field consists of the field name followed by a colon 
-     * and then the data/value associated with that field. 
-     * The field name is composed of US-ASCII characters excluding 
-     * control characters, space, and colon (i.e., characters 
-     * in the ranges U+0021 (!) through U+0039 (9), and U+003B (;) 
+     * <p>
+     * "Each paragraph consists of a series of data fields.
+     * Each field consists of the field name followed by a colon
+     * and then the data/value associated with that field.
+     * The field name is composed of US-ASCII characters excluding
+     * control characters, space, and colon (i.e., characters
+     * in the ranges U+0021 (!) through U+0039 (9), and U+003B (;)
      * through U+007E (~), inclusive)."
-     * 
-     *  - Debian Policy Manual v4.3.0.3,
-     *  https://www.debian.org/doc/debian-policy/ch-controlfields.html
-     * 
+     * <p>
+     * - Debian Policy Manual v4.3.0.3,
+     * https://www.debian.org/doc/debian-policy/ch-controlfields.html
+     *
      * @param line
      * @return data content (from the text line)
      */
-    private static String getDataFromLine(String line){
+    private static String getDataFromLine(String line) {
         return line.split(":")[1].trim();
     }
 }

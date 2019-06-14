@@ -8,9 +8,9 @@ import org.junit.Test;
  * @since 2019-06-11.
  */
 public class WebServerTest {
-    
+
     @Test
-    public void packageNameCanBeReturnedFromPath(){
+    public void packageNameCanBeReturnedFromPath() {
         String path = "/packages/test";
         Assert.assertEquals("test", WebServer.getPackageNameFromPath(path));
     }

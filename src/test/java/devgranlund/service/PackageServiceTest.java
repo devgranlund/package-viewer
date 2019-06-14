@@ -16,30 +16,30 @@ import devgranlund.domain.InstalledPackage;
  * @since 2019-06-10.
  */
 public class PackageServiceTest {
-    
+
     private static final String TEST_FILE_NAME = "status";
-    
+
     @Test
-    public void packageNamesListContainsLess(){
+    public void packageNamesListContainsLess() {
         List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME);
         Assert.assertTrue("package less can be found from list", packages.contains("less"));
     }
-    
+
     @Test
     public void packageNamesListIsOrdered() {
         List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME);
         List tmp = new ArrayList(packages);
         Collections.sort(tmp);
-        Assert.assertTrue("packageNamesList is ordered", tmp.equals(packages));        
+        Assert.assertTrue("packageNamesList is ordered", tmp.equals(packages));
     }
-    
+
     @Test
     public void domainModelIsGenerated() {
         Map<String, InstalledPackage> domainModel = getDomainModel();
         Assert.assertNotNull("Domain model is not null", domainModel);
-        Assert.assertTrue("Domain model contains some data",domainModel.size() > 0);
+        Assert.assertTrue("Domain model contains some data", domainModel.size() > 0);
     }
-    
+
     @Test
     public void installedPackageRsyncIsGeneratedCorrectly() {
         Map<String, InstalledPackage> domainModel = getDomainModel();
@@ -50,7 +50,7 @@ public class PackageServiceTest {
         Assert.assertEquals("fast, versatile, remote (and local) file-copying tool", ip.getDescription());
         Assert.assertEquals("rsync has five dependencies", 5, ip.getDepends().size());
     }
-    
+
     @Test
     public void installedPackageWithNoDependenciesGeneratedCorrectly() {
         Map<String, InstalledPackage> domainModel = getDomainModel();
@@ -60,7 +60,7 @@ public class PackageServiceTest {
         Assert.assertEquals("java-common", ip.getName());
         Assert.assertEquals("java-common, no dependencies", 0, ip.getDepends().size());
     }
-    
+
     @Test
     public void dependsSetIsGeneratedCorrectly() {
         String line = "Depends: libacl1 (>= 2.2.51-3), libc6 (>= 2.8), libpopt0 (>= 1.16), lsb-base (>= 3.2-14), base-files (>= 4.0.1)\n";
@@ -69,8 +69,8 @@ public class PackageServiceTest {
         Assert.assertEquals("Set contains 5 dependencies", 5, depends.size());
         Assert.assertTrue("libc6 can be found from the Set", depends.contains("libc6"));
     }
-    
-    @Test 
+
+    @Test
     public void dependsSetIsGeneretadCorrectlyWhenPipesExist() {
         String line = "Depends: default-jre-headless | java2-runtime-headless, libfop-java";
         Set<String> depends = PackageService.generateDependsSetFromLine(line);
@@ -80,9 +80,9 @@ public class PackageServiceTest {
         Assert.assertTrue(depends.contains("java2-runtime-headless"));
         Assert.assertTrue(depends.contains("libfop-java"));
     }
-    
+
     // Helper-method for getting domainModel
-    private Map<String, InstalledPackage> getDomainModel(){
+    private Map<String, InstalledPackage> getDomainModel() {
         return PackageService.getDomainModel(TEST_FILE_NAME);
     }
 }

@@ -13,7 +13,7 @@ import org.junit.Test;
  * @since 2019-06-11.
  */
 public class InstalledPackageTest {
-    
+
     @Test
     public void compareToWorksCorrectly() {
         List<InstalledPackage> packages = new ArrayList<>();
@@ -31,5 +31,5 @@ public class InstalledPackageTest {
         Assert.assertEquals("python", packages.get(3).getName());
         Assert.assertEquals("vi", packages.get(4).getName());
     }
-    
+
 }

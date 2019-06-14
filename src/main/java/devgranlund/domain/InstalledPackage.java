@@ -6,34 +6,34 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Domain class for installed package. Class is immutable. 
- * 
- * Design assumption is that the name of the package is unique in the OS context. 
- * 
+ * Domain class for installed package. Class is immutable.
+ * <p>
+ * Design assumption is that the name of the package is unique in the OS context.
+ *
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-11.
  */
 public final class InstalledPackage implements Comparable {
-    
+
     // unique name
     private final String name;
-    
+
     private final String description;
-    
+
     // unique names
     private final Set<String> depends;
-    
+
     //private Set<String> dependentOn;
-    
-    public InstalledPackage(String name, String description, Optional<Set<String>> dependsOptional){
+
+    public InstalledPackage(String name, String description, Optional<Set<String>> dependsOptional) {
         this.name = name;
         this.description = description;
-        if (dependsOptional.isPresent()){
-            this.depends = new HashSet<>(dependsOptional.get());    
+        if (dependsOptional.isPresent()) {
+            this.depends = new HashSet<>(dependsOptional.get());
         } else {
             this.depends = new HashSet<>();
         }
-        
+
     }
 
     public String getName() {
@@ -47,12 +47,12 @@ public final class InstalledPackage implements Comparable {
     public Set<String> getDepends() {
         return new HashSet<>(depends);
     }
-    
+
     // TODO
     // method to add package that depends on to this package. 
     // should not mutate this object's state - should return new object with 
     // updated values. 
-    
+
 
     @Override
     public boolean equals(Object o) {
@@ -69,7 +69,7 @@ public final class InstalledPackage implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        if (o instanceof InstalledPackage){
+        if (o instanceof InstalledPackage) {
             InstalledPackage ip = (InstalledPackage) o;
             return (this.name.compareTo(ip.name));
         } else {

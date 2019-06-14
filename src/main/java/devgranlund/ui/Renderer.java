@@ -5,8 +5,8 @@ package devgranlund.ui;
  * @since 2019-06-14.
  */
 public abstract class Renderer {
-    
-    protected static String renderPageTop(){
+
+    protected static String renderPageTop() {
         StringBuilder sb = new StringBuilder();
         sb.append("<!DOCTYPE html>\n");
         sb.append("<html lang=\"en\">\n");
@@ -17,8 +17,8 @@ public abstract class Renderer {
         sb.append("<body>\n");
         return sb.toString();
     }
-    
-    protected static String renderPageBottom(){
+
+    protected static String renderPageBottom() {
         StringBuilder sb = new StringBuilder();
         sb.append("</body>\n");
         sb.append("</html>");

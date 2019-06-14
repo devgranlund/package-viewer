@@ -8,9 +8,9 @@ import org.junit.Test;
  * @since 2019-06-14.
  */
 public class PackageRendererTest {
-    
+
     @Test
-    public void installedPackageIsNull(){
+    public void installedPackageIsNull() {
         String html = PackageRenderer.render(null, null);
         Assert.assertEquals("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -23,7 +23,4 @@ public class PackageRendererTest {
                 "<br/><a href=\"http://localhost:8080\">All packages</a></body>\n" +
                 "</html>", html);
     }
-    
-    
-    
 }
