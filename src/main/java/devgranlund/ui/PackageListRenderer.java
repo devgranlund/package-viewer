@@ -6,17 +6,11 @@ import java.util.List;
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-10.
  */
-public class PackageListRenderer {
+public class PackageListRenderer extends Renderer {
     
     public static String render(List<String> packageNames) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<!DOCTYPE html>\n");
-        sb.append("<html lang=\"en\">\n");
-        sb.append("<head>\n");
-        sb.append("<meta charset=\"utf-8\">\n");
-        sb.append("<title>package-viewer</title>\n");
-        sb.append("</head>\n");
-        sb.append("<body>\n");
+        sb.append(renderPageTop());
         sb.append("<h3>List of packages:</h3>\n");
         for (String packageName : packageNames){
             sb.append("<a href=\"http://localhost:8080/packages/" 
@@ -25,8 +19,7 @@ public class PackageListRenderer {
                     + packageName
                     + "</a><br/>\n");
         }
-        sb.append("</body>\n");
-        sb.append("</html>");
+        sb.append(renderPageBottom());
         return sb.toString();
     }
     

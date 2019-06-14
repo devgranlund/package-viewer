@@ -28,8 +28,8 @@ Too much work to do own implementation.
 ## Future considerations
 * FileReader - fix closing of resources
 * shutdown to HTML
-* functional interface to render-classes
+* ~~abstract base class for render-classes~~
 * bidirectional relationships
 * Vagrant with real package listing
 * PackageRendererTest
-* uppstart-job -> fails
+* ~~uppstart-job -> fails~~

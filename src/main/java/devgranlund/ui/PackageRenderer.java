@@ -6,16 +6,23 @@ import devgranlund.domain.InstalledPackage;
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-12.
  */
-public class PackageRenderer {
+public class PackageRenderer extends Renderer {
     public static String render(InstalledPackage installedPackage) {
+        if (installedPackage != null){
+            return renderPackageView(installedPackage);
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(renderPageTop());
+            sb.append("<h3>Package is not installed!</h3>\n");
+            sb.append("<br/><a href=\"http://localhost:8080\">All packages</a>");
+            sb.append(Renderer.renderPageBottom());
+            return sb.toString();
+        }
+    }
+    
+    private static String renderPackageView(InstalledPackage installedPackage){
         StringBuilder sb = new StringBuilder();
-        sb.append("<!DOCTYPE html>\n");
-        sb.append("<html lang=\"en\">\n");
-        sb.append("<head>\n");
-        sb.append("<meta charset=\"utf-8\">\n");
-        sb.append("<title>package-viewer</title>\n");
-        sb.append("</head>\n");
-        sb.append("<body>\n");
+        sb.append(renderPageTop());
         sb.append("<h3>Package:</h3>\n");
         sb.append("Name: " + installedPackage.getName() + "<br/>");
         sb.append("Description: " + installedPackage.getDescription() + "<br/>");
@@ -28,8 +35,7 @@ public class PackageRenderer {
                     + "</a>&nbsp;");
         }
         sb.append("<br/><a href=\"http://localhost:8080\">All packages</a>");
-        sb.append("</body>\n");
-        sb.append("</html>");
+        sb.append(Renderer.renderPageBottom());
         return sb.toString();
     }
 }
