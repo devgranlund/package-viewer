@@ -41,8 +41,8 @@ public class PackageService {
                         line.startsWith("Depends:")
                         ||
                         line.startsWith("Description:")
-                        ||
-                        line.startsWith(" ")
+                        || 
+                        line.length() == 0
                         )
                 .collect(Collectors.toList());
         
@@ -61,8 +61,11 @@ public class PackageService {
                 depends = generateDependsSetFromLine(line);
             }
             // end of "package object"
-            else if (line.startsWith(" ")){
+            else if (line.length() == 0){
                 domainModel.put(name, new InstalledPackage(name, description, Optional.of(depends)));
+                name = "";
+                description = "";
+                depends = new HashSet<>();
             }
         }
         
@@ -80,9 +83,12 @@ public class PackageService {
     protected static Set<String> generateDependsSetFromLine(String line){
         Set<String> depends = new HashSet<>();
         String data = getDataFromLine(line);
-        String[] dependencies = data.split(",");
-        for (String dependency : dependencies){
-            depends.add(dependency.trim().split(" ")[0]);
+        String[] dirtyDependencies = data.split(",");
+        for (String dirty : dirtyDependencies){
+            String[] finalDependencies = dirty.split("\\|");
+            for (String dependency : finalDependencies){
+                depends.add(dependency.trim().split(" ")[0]);    
+            }
         }
         return depends;
     }

@@ -26,7 +26,10 @@ Modular, flexible and light-weight HTTP-server implementation.
 Too much work to do own implementation.
 
 ## Future considerations
+* ~~Fix security vulnerability in undertow-core 2.0.1 -> patch to 2.0.21~~ 
 * FileReader - fix closing of resources
+* ~~fix fop~~
+* ~~fix libjs-jquery~~
 * shutdown to HTML
 * ~~abstract base class for render-classes~~
 * bidirectional relationships

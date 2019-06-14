@@ -48,6 +48,17 @@ public class PackageServiceTest {
         Assert.assertNotNull("InstalledPackage 'rsync' is not null", ip);
         Assert.assertEquals("rsync", ip.getName());
         Assert.assertEquals("fast, versatile, remote (and local) file-copying tool", ip.getDescription());
+        Assert.assertEquals("rsync has five dependencies", 5, ip.getDepends().size());
+    }
+    
+    @Test
+    public void installedPackageWithNoDependenciesGeneratedCorrectly() {
+        Map<String, InstalledPackage> domainModel = getDomainModel();
+        Assert.assertTrue("Domain model contains java-common", domainModel.containsKey("java-common"));
+        InstalledPackage ip = domainModel.get("java-common");
+        Assert.assertNotNull("InstalledPackage 'java-common' is not null", ip);
+        Assert.assertEquals("java-common", ip.getName());
+        Assert.assertEquals("java-common, no dependencies", 0, ip.getDepends().size());
     }
     
     @Test
@@ -57,6 +68,17 @@ public class PackageServiceTest {
         Assert.assertNotNull("Set is not null", depends);
         Assert.assertEquals("Set contains 5 dependencies", 5, depends.size());
         Assert.assertTrue("libc6 can be found from the Set", depends.contains("libc6"));
+    }
+    
+    @Test 
+    public void dependsSetIsGeneretadCorrectlyWhenPipesExist() {
+        String line = "Depends: default-jre-headless | java2-runtime-headless, libfop-java";
+        Set<String> depends = PackageService.generateDependsSetFromLine(line);
+        Assert.assertNotNull("Set is not null", depends);
+        Assert.assertEquals("Set contains 3 dependencies", 3, depends.size());
+        Assert.assertTrue(depends.contains("default-jre-headless"));
+        Assert.assertTrue(depends.contains("java2-runtime-headless"));
+        Assert.assertTrue(depends.contains("libfop-java"));
     }
     
     // Helper-method for getting domainModel

@@ -1,5 +1,7 @@
 package devgranlund.ui;
 
+import java.util.Map;
+
 import devgranlund.domain.InstalledPackage;
 
 /**
@@ -7,9 +9,9 @@ import devgranlund.domain.InstalledPackage;
  * @since 2019-06-12.
  */
 public class PackageRenderer extends Renderer {
-    public static String render(InstalledPackage installedPackage) {
+    public static String render(Map<String, InstalledPackage> domainModel, InstalledPackage installedPackage) {
         if (installedPackage != null){
-            return renderPackageView(installedPackage);
+            return renderPackageView(domainModel, installedPackage);
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append(renderPageTop());
@@ -20,7 +22,7 @@ public class PackageRenderer extends Renderer {
         }
     }
     
-    private static String renderPackageView(InstalledPackage installedPackage){
+    private static String renderPackageView(Map<String, InstalledPackage> domainModel, InstalledPackage installedPackage){
         StringBuilder sb = new StringBuilder();
         sb.append(renderPageTop());
         sb.append("<h3>Package:</h3>\n");
@@ -28,11 +30,15 @@ public class PackageRenderer extends Renderer {
         sb.append("Description: " + installedPackage.getDescription() + "<br/>");
         sb.append("Depends: ");
         for (String packageName : installedPackage.getDepends()){
-            sb.append("<a href=\"http://localhost:8080/packages/"
-                    + packageName
-                    + "\">"
-                    + packageName
-                    + "</a>&nbsp;");
+            if (domainModel.containsKey(packageName)){
+                sb.append("<a href=\"http://localhost:8080/packages/"
+                        + packageName
+                        + "\">"
+                        + packageName
+                        + "</a>&nbsp;");    
+            } else {
+                sb.append(" <strike>" + packageName + "</strike> ");   
+            }
         }
         sb.append("<br/><a href=\"http://localhost:8080\">All packages</a>");
         sb.append(Renderer.renderPageBottom());

@@ -42,8 +42,9 @@ public class WebServer {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             String packageName = getPackageNameFromPath(exchange.getRequestPath());
-                            InstalledPackage installedPackage = PackageService.getDomainModel(LOCAL_FILE_NAME).get(packageName);
-                            String html = PackageRenderer.render(installedPackage);
+                            Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(LOCAL_FILE_NAME);
+                            InstalledPackage installedPackage = domainModel.get(packageName);
+                            String html = PackageRenderer.render(domainModel, installedPackage);
                             
                             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
                             exchange.getResponseSender().send(html);
