@@ -4,6 +4,7 @@ import devgranlund.domain.InstalledPackage;
 import devgranlund.service.PackageService;
 import devgranlund.ui.PackageListRenderer;
 import devgranlund.ui.PackageRenderer;
+import devgranlund.ui.ShutdownRenderer;
 import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -31,8 +32,8 @@ public class WebServer {
                     .addPrefixPath("/shutdown", new HttpHandler() {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-                            exchange.getResponseSender().send("Server shutting down... \n");
+                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
+                            exchange.getResponseSender().send(ShutdownRenderer.render());
                             server.stop();
                         }
                     })
