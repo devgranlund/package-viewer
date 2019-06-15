@@ -1,29 +1,15 @@
 # package-viewer
 Small program to list installed packages
 
-### Build
-mvn clean package
+### Vagrant
+run: vagrant up  
+end: vagrant destroy  
+reload: vagrant reload --provision
 
-### Run web server
-java -jar target/package-viewer-1.0-SNAPSHOT.jar
-
-### HTTP API
+#### HTTP API
 localhost:8080 - get package listing  
 localhost:8080/shutdown - shutdown the server  
 localhost:8080/packages/{packageName} - get details of one package
-
-### Undertow unclean shutdown (Mac)
-lsof -i:8080  
-kill -9 *id
-
-## Dependencies and rationale for use
-
-### JUnit test framework
-No need for rationale, right?
-
-### Undertow web server
-Modular, flexible and light-weight HTTP-server implementation.  
-Too much work to do own implementation.
 
 ## Future considerations
 * Vagrant with real package listing
@@ -37,3 +23,26 @@ Too much work to do own implementation.
 * ~~Generate bidirectional relationships~~
 * ~~PackageRendererTest~~
 * ~~Fix uppstart-job --package -> fails~~
+
+## Dependencies and rationale for use
+
+### JUnit test framework
+No need for rationale, right?
+
+### Undertow web server
+Modular, flexible and light-weight HTTP-server implementation.  
+Too much work to do own implementation.
+
+## Development related instructions
+
+#### Build Java project manually
+mvn clean package
+
+#### Run project (web server) manually
+java -jar target/package-viewer-1.0-SNAPSHOT.jar
+
+#### Undertow unclean shutdown (Mac)
+lsof -i:8080  
+kill -9 *id
+
+
