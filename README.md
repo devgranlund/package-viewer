@@ -32,7 +32,7 @@ Too much work to do own implementation.
 * ~~Fix libjs-jquery -package~~
 * ~~Convert shutdown message to HTML~~
 * ~~abstract base class for render-classes~~
-* Generate bidirectional relationships
+* ~~Generate bidirectional relationships~~
 * Vagrant with real package listing
 * ~~PackageRendererTest~~
 * ~~Fix uppstart-job --package -> fails~~

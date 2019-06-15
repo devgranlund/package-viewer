@@ -1,5 +1,6 @@
 package devgranlund.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,23 +48,53 @@ public class PackageService {
                 .collect(Collectors.toList());
 
         Map<String, InstalledPackage> domainModel = new HashMap<>();
-        String name = "";
-        String description = "";
-        Set<String> depends = new HashSet<>();
+        Map<String, List<String>> helperMap = new HashMap<>();
+        
+        String mainPackageName = "";
+        String mainPackageDescription = "";
+        Set<String> mainPackageDepends = new HashSet<>();
         for (String line : lines) {
             if (line.startsWith("Package:")) {
-                name = getDataFromLine(line);
+                mainPackageName = getDataFromLine(line);
             } else if (line.startsWith("Description:")) {
-                description = getDataFromLine(line);
+                mainPackageDescription = getDataFromLine(line);
             } else if (line.startsWith("Depends:")) {
-                depends = generateDependsSetFromLine(line);
+                mainPackageDepends = generateDependsSetFromLine(line);
             }
-            // end of "package object"
+            // end of "package entry"
             else if (line.length() == 0) {
-                domainModel.put(name, new InstalledPackage(name, description, Optional.of(depends)));
-                name = "";
-                description = "";
-                depends = new HashSet<>();
+                
+                // create new package
+                domainModel.put(mainPackageName, new InstalledPackage(mainPackageName, mainPackageDescription, mainPackageDepends));
+                
+                // there's bidirectional dependencies in helper map that belong
+                // to the package that was just created
+                if (helperMap.containsKey(mainPackageName)){
+                    for (String dependant : helperMap.get(mainPackageName)){
+                        domainModel.put(mainPackageName, domainModel.get(mainPackageName).addBidirectionalLink(dependant));
+                    }
+                    helperMap.remove(mainPackageName);
+                }
+                
+                // create bi-directional links
+                for (String dependency : mainPackageDepends){
+                    if (domainModel.containsKey(dependency)){
+                        domainModel.put(dependency, domainModel.get(dependency).addBidirectionalLink(mainPackageName));
+                    } else {
+                        if (helperMap.containsKey(dependency)){
+                            helperMap.get(dependency).add(mainPackageName);
+                        } else {
+                            List<String> list = new ArrayList<>();
+                            list.add(mainPackageName);
+                            helperMap.put(dependency, list);
+                        }
+                    }
+                }
+                
+                // clear existing values
+                mainPackageName = "";
+                mainPackageDescription = "";
+                mainPackageDepends = new HashSet<>();
             }
         }
 

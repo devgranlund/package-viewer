@@ -49,6 +49,8 @@ public class PackageServiceTest {
         Assert.assertEquals("rsync", ip.getName());
         Assert.assertEquals("fast, versatile, remote (and local) file-copying tool", ip.getDescription());
         Assert.assertEquals("rsync has five dependencies", 5, ip.getDepends().size());
+        Assert.assertEquals(1, ip.getBidirectionalLinks().size());
+        Assert.assertTrue(ip.getBidirectionalLinks().contains("ubuntu-standard"));
     }
 
     @Test
@@ -59,6 +61,9 @@ public class PackageServiceTest {
         Assert.assertNotNull("InstalledPackage 'java-common' is not null", ip);
         Assert.assertEquals("java-common", ip.getName());
         Assert.assertEquals("java-common, no dependencies", 0, ip.getDepends().size());
+        Assert.assertEquals(2, ip.getBidirectionalLinks().size());
+        Assert.assertTrue(ip.getBidirectionalLinks().contains("openjdk-6-jre-headless"));
+        Assert.assertTrue(ip.getBidirectionalLinks().contains("libecj-java"));
     }
 
     @Test

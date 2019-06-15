@@ -2,7 +2,6 @@ package devgranlund.domain;
 
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -23,17 +22,30 @@ public final class InstalledPackage implements Comparable {
     // unique names
     private final Set<String> depends;
 
-    //private Set<String> dependentOn;
+    private final Set<String> bidirectionalLinks;
 
-    public InstalledPackage(String name, String description, Optional<Set<String>> dependsOptional) {
+    /**
+     * New object should be created only through this constructor to guarantee immutability.
+     *  @param name
+     * @param description
+     * @param depends
+     */
+    public InstalledPackage(String name, String description, Set<String> depends) {
         this.name = name;
         this.description = description;
-        if (dependsOptional.isPresent()) {
-            this.depends = new HashSet<>(dependsOptional.get());
+        if (depends != null) {
+            this.depends = new HashSet<>(depends);
         } else {
             this.depends = new HashSet<>();
         }
-
+        this.bidirectionalLinks = new HashSet<>();
+    }
+    
+    private InstalledPackage (String name, String description, Set<String> depends, Set<String> bidirectionalLinks){
+        this.name = name;
+        this.description = description;
+        this.depends = new HashSet<>(depends);
+        this.bidirectionalLinks = new HashSet<>(bidirectionalLinks);
     }
 
     public String getName() {
@@ -47,13 +59,25 @@ public final class InstalledPackage implements Comparable {
     public Set<String> getDepends() {
         return new HashSet<>(depends);
     }
+    
+    public Set<String> getBidirectionalLinks() {
+        return new HashSet<>(bidirectionalLinks);
+    }
 
-    // TODO
-    // method to add package that depends on to this package. 
-    // should not mutate this object's state - should return new object with 
-    // updated values. 
-
-
+    /**
+     * Method to add new bidirectional link. Does not mutate current object, 
+     * new object with added content is returned. 
+     * 
+     * @usage objectReference = objectReference.addBidirectionalLink(link)
+     * @param packageName name of the package (to be added as a bidirectional link)
+     * @return new object with added content
+     */
+    public InstalledPackage addBidirectionalLink(String packageName){
+        Set<String> newBidirectionalLink = new HashSet<>(this.bidirectionalLinks);
+        newBidirectionalLink.add(packageName);
+        return new InstalledPackage(this.name, this.description, this.depends, newBidirectionalLink);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

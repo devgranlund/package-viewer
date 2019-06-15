@@ -30,18 +30,28 @@ public class PackageRenderer extends Renderer {
         sb.append("Description: " + installedPackage.getDescription() + "<br/>");
         sb.append("Depends: ");
         for (String packageName : installedPackage.getDepends()) {
-            if (domainModel.containsKey(packageName)) {
-                sb.append("<a href=\"http://localhost:8080/packages/"
-                        + packageName
-                        + "\">"
-                        + packageName
-                        + "</a>&nbsp;");
-            } else {
-                sb.append(" <strike>" + packageName + "</strike> ");
-            }
+            sb.append(renderDependency(domainModel, packageName));
+        }
+        sb.append("<br/>Is dependent by: ");
+        for (String packageName : installedPackage.getBidirectionalLinks()) {
+            sb.append(renderDependency(domainModel, packageName));
         }
         sb.append("<br/><a href=\"http://localhost:8080\">All packages</a>");
         sb.append(Renderer.renderPageBottom());
+        return sb.toString();
+    }
+    
+    private static String renderDependency(Map<String, InstalledPackage> domainModel, String packageName){
+        StringBuilder sb = new StringBuilder();
+        if (domainModel.containsKey(packageName)) {
+            sb.append("<a href=\"http://localhost:8080/packages/"
+                    + packageName
+                    + "\">"
+                    + packageName
+                    + "</a>&nbsp;");
+        } else {
+            sb.append(" <strike>" + packageName + "</strike> ");
+        }
         return sb.toString();
     }
 }
