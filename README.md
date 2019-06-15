@@ -16,7 +16,7 @@ localhost:8080/packages/{packageName} - get details of one package
 lsof -i:8080  
 kill -9 *id
 
-## Dependencies and rationale
+## Dependencies and rationale for use
 
 ### JUnit test framework
 No need for rationale, right?
@@ -26,14 +26,14 @@ Modular, flexible and light-weight HTTP-server implementation.
 Too much work to do own implementation.
 
 ## Future considerations
-* ~~Fix security vulnerability in undertow-core 2.0.1 -> patch to 2.0.21~~ 
+* Vagrant with real package listing
 * FileReader - fix closing of resources
+* More tests, 100% line coverage :)
+* ~~Fix security vulnerability in undertow-core 2.0.1 -> patch to 2.0.21~~ 
 * ~~Fix fop -package~~
 * ~~Fix libjs-jquery -package~~
 * ~~Convert shutdown message to HTML~~
-* ~~abstract base class for render-classes~~
+* ~~Abstract base class for render-classes~~
 * ~~Generate bidirectional relationships~~
-* Vagrant with real package listing
 * ~~PackageRendererTest~~
 * ~~Fix uppstart-job --package -> fails~~
-* More tests, 100% line coverage :)
