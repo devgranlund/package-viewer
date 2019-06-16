@@ -27,9 +27,9 @@ public final class InstalledPackage implements Comparable {
     /**
      * New object should be created only through this constructor to guarantee immutability.
      *
-     * @param name
-     * @param description
-     * @param depends
+     * @param name - name of the package
+     * @param description - package description
+     * @param depends - set containing class names that this class depends
      */
     public InstalledPackage(String name, String description, Set<String> depends) {
         this.name = name;

@@ -7,21 +7,19 @@ package devgranlund.ui;
 public abstract class Renderer {
 
     protected static String renderPageTop() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<!DOCTYPE html>\n");
-        sb.append("<html lang=\"en\">\n");
-        sb.append("<head>\n");
-        sb.append("<meta charset=\"utf-8\">\n");
-        sb.append("<title>package-viewer</title>\n");
-        sb.append("</head>\n");
-        sb.append("<body>\n");
-        return sb.toString();
+        String sb = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "<meta charset=\"utf-8\">\n" +
+                "<title>package-viewer</title>\n" +
+                "</head>\n" +
+                "<body>\n";
+        return sb;
     }
 
     protected static String renderPageBottom() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("</body>\n");
-        sb.append("</html>");
-        return sb.toString();
+        String sb = "</body>\n" +
+                "</html>";
+        return sb;
     }
 }

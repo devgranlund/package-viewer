@@ -13,11 +13,7 @@ public class PackageListRenderer extends Renderer {
         sb.append(renderPageTop());
         sb.append("<h3>List of packages:</h3>\n");
         for (String packageName : packageNames) {
-            sb.append("<a href=\"http://localhost:8080/packages/"
-                    + packageName
-                    + "\">"
-                    + packageName
-                    + "</a><br/>\n");
+            sb.append("<a href=\"http://localhost:8080/packages/").append(packageName).append("\">").append(packageName).append("</a><br/>\n");
         }
         sb.append(renderPageBottom());
         return sb.toString();

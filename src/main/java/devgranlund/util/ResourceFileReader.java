@@ -31,10 +31,10 @@ public class ResourceFileReader extends FileReader {
      * Opens file from resources and returns it's contents in List.
      * One line in the file is one entry in the list.
      *
-     * @return
+     * @return file content
      * @note Used only in testing.
      */
-    protected List<String> getFileContentFromResoucesInList() {
+    protected List<String> getFileContentFromResourcesInList() {
         List<String> lines;
         Stream<String> stream = getFileContentFromResourcesInStream();
         lines = stream.collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class ResourceFileReader extends FileReader {
      * results stream to be closed. This might be because of stream lazy processing?
      */
     public Stream<String> getFileContentFromResourcesInStream() {
-        Stream<String> stream = null;
+        Stream<String> stream;
 
         try {
 

@@ -30,7 +30,7 @@ public class PackageServiceTest {
         List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME, false);
         List tmp = new ArrayList(packages);
         Collections.sort(tmp);
-        Assert.assertTrue("packageNamesList is ordered", tmp.equals(packages));
+        Assert.assertEquals("packageNamesList is ordered", tmp, packages);
     }
 
     @Test

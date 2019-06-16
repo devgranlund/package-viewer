@@ -7,10 +7,9 @@ package devgranlund.ui;
 public class ShutdownRenderer extends Renderer {
 
     public static String render() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(renderPageTop());
-        sb.append("<h3>Server shutdown, all hope is lost.</h3>\n");
-        sb.append(renderPageBottom());
-        return sb.toString();
+        String sb = renderPageTop() +
+                "<h3>Server shutdown, all hope is lost.</h3>\n" +
+                renderPageBottom();
+        return sb;
     }
 }

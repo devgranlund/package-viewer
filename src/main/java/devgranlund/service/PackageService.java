@@ -168,7 +168,7 @@ public class PackageService {
      * - Debian Policy Manual v4.3.0.3,
      * https://www.debian.org/doc/debian-policy/ch-controlfields.html
      *
-     * @param line
+     * @param line - one line of text
      * @return data content (from the text line)
      */
     private static String getDataFromLine(String line) {
