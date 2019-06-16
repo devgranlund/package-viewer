@@ -34,6 +34,11 @@ Modular, flexible and light-weight HTTP-server implementation.
 Too much work to do own implementation.
 
 ## Development related instructions
+By default, program is run in dev/test -mode.  
+Program can be executed in production -mode with command line parameter "prod"
+
+#### Build and run -script (dev/test)
+sh compile-and-run.sh
 
 #### Build Java project manually
 mvn clean package

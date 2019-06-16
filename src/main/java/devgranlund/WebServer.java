@@ -20,13 +20,20 @@ import io.undertow.util.Headers;
  */
 public class WebServer {
 
-    private static final String LOCAL_FILE_NAME = "status";
+    private static String FILE_NAME = "status";
+    private static boolean RUNS_IN_PRODUCTION = false; 
     private static final String HEADER_VALUE = "text/html";
     private static Undertow server;
 
     public static void main(final String[] args) {
+
+        if (args != null && args.length < 0 && args[0] != null && args[0].equals("prod")){
+            FILE_NAME = "/var/lib/dpkg/status";
+            RUNS_IN_PRODUCTION = true;
+        }
+        
         server = Undertow.builder()
-                .addHttpListener(8080, "localhost")
+                .addHttpListener(8080, "0.0.0.0")
                 .setHandler(path()
 
                         // Shutdown
@@ -36,6 +43,7 @@ public class WebServer {
                                 exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, HEADER_VALUE);
                                 exchange.getResponseSender().send(ShutdownRenderer.render());
                                 server.stop();
+                                System.exit(0);
                             }
                         })
 
@@ -44,7 +52,7 @@ public class WebServer {
                             @Override
                             public void handleRequest(HttpServerExchange exchange) throws Exception {
                                 String packageName = getPackageNameFromPath(exchange.getRequestPath());
-                                Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(LOCAL_FILE_NAME);
+                                Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(FILE_NAME);
                                 InstalledPackage installedPackage = domainModel.get(packageName);
                                 String html = PackageRenderer.render(domainModel, installedPackage);
 
@@ -58,7 +66,7 @@ public class WebServer {
                         .addPrefixPath("/", new HttpHandler() {
                             @Override
                             public void handleRequest(HttpServerExchange exchange) throws Exception {
-                                String html = PackageListRenderer.render(PackageService.getPackageNamesInList(LOCAL_FILE_NAME));
+                                String html = PackageListRenderer.render(PackageService.getPackageNamesInList(FILE_NAME));
 
                                 exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, HEADER_VALUE);
                                 exchange.getResponseSender().send(html);
