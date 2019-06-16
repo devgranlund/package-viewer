@@ -21,15 +21,17 @@ import io.undertow.util.Headers;
 public class WebServer {
 
     private static String FILE_NAME = "status";
-    private static boolean RUNS_IN_PRODUCTION = false; 
+    private static boolean RUNS_IN_PRODUCTION_MODE = false; 
     private static final String HEADER_VALUE = "text/html";
     private static Undertow server;
 
     public static void main(final String[] args) {
-
-        if (args != null && args.length < 0 && args[0] != null && args[0].equals("prod")){
+        if (args.length > 0 && args[0] != null && args[0].equals("prod")){
             FILE_NAME = "/var/lib/dpkg/status";
-            RUNS_IN_PRODUCTION = true;
+            RUNS_IN_PRODUCTION_MODE = true;
+            System.out.println("prod mode");
+        } else {
+            System.out.println("dev/test mode");
         }
         
         server = Undertow.builder()
@@ -40,6 +42,8 @@ public class WebServer {
                         .addPrefixPath("/shutdown", new HttpHandler() {
                             @Override
                             public void handleRequest(HttpServerExchange exchange) throws Exception {
+                                System.out.println("Server shutdown requested.");
+
                                 exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, HEADER_VALUE);
                                 exchange.getResponseSender().send(ShutdownRenderer.render());
                                 server.stop();
@@ -51,14 +55,15 @@ public class WebServer {
                         .addPrefixPath("/packages", new HttpHandler() {
                             @Override
                             public void handleRequest(HttpServerExchange exchange) throws Exception {
+                                System.out.println("Package requested.");
+
                                 String packageName = getPackageNameFromPath(exchange.getRequestPath());
-                                Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(FILE_NAME);
+                                Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(FILE_NAME, RUNS_IN_PRODUCTION_MODE);
                                 InstalledPackage installedPackage = domainModel.get(packageName);
                                 String html = PackageRenderer.render(domainModel, installedPackage);
 
                                 exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, HEADER_VALUE);
                                 exchange.getResponseSender().send(html);
-
                             }
                         })
 
@@ -66,7 +71,9 @@ public class WebServer {
                         .addPrefixPath("/", new HttpHandler() {
                             @Override
                             public void handleRequest(HttpServerExchange exchange) throws Exception {
-                                String html = PackageListRenderer.render(PackageService.getPackageNamesInList(FILE_NAME));
+                                System.out.println("Package list requested.");
+
+                                String html = PackageListRenderer.render(PackageService.getPackageNamesInList(FILE_NAME, RUNS_IN_PRODUCTION_MODE));
 
                                 exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, HEADER_VALUE);
                                 exchange.getResponseSender().send(html);

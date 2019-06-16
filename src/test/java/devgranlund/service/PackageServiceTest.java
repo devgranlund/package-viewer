@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import devgranlund.domain.InstalledPackage;
+import devgranlund.ui.PackageRenderer;
 
 /**
  * @author tuomas.granlund@gmail.com
@@ -21,13 +22,13 @@ public class PackageServiceTest {
 
     @Test
     public void packageNamesListContainsLess() {
-        List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME);
+        List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME, false);
         Assert.assertTrue("package less can be found from list", packages.contains("less"));
     }
 
     @Test
     public void packageNamesListIsOrdered() {
-        List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME);
+        List<String> packages = PackageService.getPackageNamesInList(TEST_FILE_NAME, false);
         List tmp = new ArrayList(packages);
         Collections.sort(tmp);
         Assert.assertTrue("packageNamesList is ordered", tmp.equals(packages));
@@ -86,8 +87,14 @@ public class PackageServiceTest {
         Assert.assertTrue(depends.contains("libfop-java"));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void prodEnvironmentInTestFails(){
+        Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(TEST_FILE_NAME, true);
+        Assert.assertNotNull(domainModel);
+    }
+    
     // Helper-method for getting domainModel
     private Map<String, InstalledPackage> getDomainModel() {
-        return PackageService.getDomainModel(TEST_FILE_NAME);
+        return PackageService.getDomainModel(TEST_FILE_NAME, false);
     }
 }

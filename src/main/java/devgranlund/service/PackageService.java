@@ -19,10 +19,10 @@ import devgranlund.util.FileReader;
  */
 public class PackageService {
 
-    public static List<String> getPackageNamesInList(String fileName) {
+    public static List<String> getPackageNamesInList(String fileName, boolean runsInProductionMode) {
         List<String> packageNames;
-        final FileReader fileReader = new FileReader(fileName);
-        Stream<String> stream = fileReader.getFileContentFromResourcesInStream();
+        final FileReader fileReader = FileReader.newInstance(fileName, runsInProductionMode);
+        Stream<String> stream = fileReader.getFileContentInStream();
         packageNames = stream
                 .filter(line -> line.startsWith("Package:"))
                 .map(line -> line.split("\\s+")[1])
@@ -31,10 +31,10 @@ public class PackageService {
         return packageNames;
     }
 
-    public static Map<String, InstalledPackage> getDomainModel(String fileName) {
+    public static Map<String, InstalledPackage> getDomainModel(String fileName, boolean runsInProductionMode) {
         List<String> lines;
-        final FileReader fileReader = new FileReader(fileName);
-        Stream<String> stream = fileReader.getFileContentFromResourcesInStream();
+        final FileReader fileReader = FileReader.newInstance(fileName, runsInProductionMode);
+        Stream<String> stream = fileReader.getFileContentInStream();
         lines = stream
                 .filter(line ->
                         line.startsWith("Package:")
