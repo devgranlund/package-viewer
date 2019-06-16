@@ -40,8 +40,8 @@ public class PackageRenderer extends Renderer {
         sb.append(Renderer.renderPageBottom());
         return sb.toString();
     }
-    
-    private static String renderDependency(Map<String, InstalledPackage> domainModel, String packageName){
+
+    private static String renderDependency(Map<String, InstalledPackage> domainModel, String packageName) {
         StringBuilder sb = new StringBuilder();
         if (domainModel.containsKey(packageName)) {
             sb.append("<a href=\"http://localhost:8080/packages/"

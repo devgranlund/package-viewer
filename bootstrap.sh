@@ -16,6 +16,6 @@ java -version
 cd /vagrant
 mvn clean package
 
-## Start server
+## Start server in production mode
 java -jar target/package-viewer-1.0-SNAPSHOT.jar prod
 

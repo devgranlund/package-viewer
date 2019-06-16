@@ -21,19 +21,19 @@ import io.undertow.util.Headers;
 public class WebServer {
 
     private static String FILE_NAME = "status";
-    private static boolean RUNS_IN_PRODUCTION_MODE = false; 
+    private static boolean RUNS_IN_PRODUCTION_MODE = false;
     private static final String HEADER_VALUE = "text/html";
     private static Undertow server;
 
     public static void main(final String[] args) {
-        if (args.length > 0 && args[0] != null && args[0].equals("prod")){
+        if (args.length > 0 && args[0] != null && args[0].equals("prod")) {
             FILE_NAME = "/var/lib/dpkg/status";
             RUNS_IN_PRODUCTION_MODE = true;
             System.out.println("prod mode");
         } else {
             System.out.println("dev/test mode");
         }
-        
+
         server = Undertow.builder()
                 .addHttpListener(8080, "0.0.0.0")
                 .setHandler(path()

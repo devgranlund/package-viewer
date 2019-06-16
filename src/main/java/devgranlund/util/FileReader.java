@@ -3,7 +3,7 @@ package devgranlund.util;
 import java.util.stream.Stream;
 
 /**
- * Class to read installed packages from the system.
+ * Class to read files.
  * <p>
  * During the development and testing local resource file can be used as a input.
  * The production version uses real file from file system.
@@ -21,15 +21,15 @@ public abstract class FileReader {
     protected FileReader(String fileName) {
         this.fileName = fileName;
     }
-    
-    public static FileReader newInstance(String fileName, boolean runsInProductionMode){
-        if (runsInProductionMode == false){
+
+    public static FileReader newInstance(String fileName, boolean runsInProductionMode) {
+        if (!runsInProductionMode) {
             return new ResourceFileReader(fileName);
         } else {
             return new FileSystemFileReader(fileName);
         }
     }
-    
+
     /**
      * Opens file and returns it's contents in Stream.
      *

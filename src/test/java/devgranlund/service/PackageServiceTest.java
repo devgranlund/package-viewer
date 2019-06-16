@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import devgranlund.domain.InstalledPackage;
-import devgranlund.ui.PackageRenderer;
 
 /**
  * @author tuomas.granlund@gmail.com
@@ -88,11 +87,11 @@ public class PackageServiceTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void prodEnvironmentInTestFails(){
+    public void prodEnvironmentInTestFails() {
         Map<String, InstalledPackage> domainModel = PackageService.getDomainModel(TEST_FILE_NAME, true);
         Assert.assertNotNull(domainModel);
     }
-    
+
     // Helper-method for getting domainModel
     private Map<String, InstalledPackage> getDomainModel() {
         return PackageService.getDomainModel(TEST_FILE_NAME, false);

@@ -10,12 +10,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * This class is used to read file from resources-folder of this program.
+ * Class was used during development.
+ *
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-16.
  */
 public class ResourceFileReader extends FileReader {
-    
-    public ResourceFileReader(String fileName){
+
+    public ResourceFileReader(String fileName) {
         super(fileName);
     }
 

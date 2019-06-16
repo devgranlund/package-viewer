@@ -11,6 +11,7 @@ import org.junit.Test;
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-11.
  */
+@SuppressWarnings("ALL")
 public class InstalledPackageTest {
 
     @Test
@@ -30,11 +31,11 @@ public class InstalledPackageTest {
         Assert.assertEquals("python", packages.get(3).getName());
         Assert.assertEquals("vi", packages.get(4).getName());
     }
-    
+
     @Test
-    public void bidirectionalLinkCanBeAdded(){
+    public void bidirectionalLinkCanBeAdded() {
         InstalledPackage ip = new InstalledPackage(
-                "java-common", 
+                "java-common",
                 "Base of all Java packages",
                 null);
         int objectId1 = System.identityHashCode(ip);
@@ -43,7 +44,7 @@ public class InstalledPackageTest {
         int objectId2 = System.identityHashCode(ip);
         Assert.assertNotEquals(objectId1, objectId2); // check that insertion does not mutate
         Assert.assertTrue(ip.getBidirectionalLinks().contains("libecj-java"));
-        
+
     }
 
 }

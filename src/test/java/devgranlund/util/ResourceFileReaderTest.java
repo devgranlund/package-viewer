@@ -21,7 +21,7 @@ public class ResourceFileReaderTest {
 
     @Test
     public void fileContainsSomeLines() {
-        ResourceFileReader fileReader = (ResourceFileReader)FileReader.newInstance("status", false);
+        ResourceFileReader fileReader = (ResourceFileReader) FileReader.newInstance("status", false);
         List<String> lines = fileReader.getFileContentFromResoucesInList();
         Assert.assertTrue("There's some lines in the list", lines.size() > 0);
     }
