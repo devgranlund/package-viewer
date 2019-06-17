@@ -3,6 +3,8 @@ package devgranlund.ui;
 import java.util.List;
 
 /**
+ * Render list of package names to HTML. 
+ * 
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-10.
  */

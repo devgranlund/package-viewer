@@ -5,6 +5,8 @@ import java.util.Map;
 import devgranlund.domain.InstalledPackage;
 
 /**
+ * Render the data of one installed package.
+ * 
  * @author tuomas.granlund@gmail.com
  * @since 2019-06-12.
  */
@@ -13,11 +15,10 @@ public class PackageRenderer extends Renderer {
         if (installedPackage != null) {
             return renderPackageView(domainModel, installedPackage);
         } else {
-            String sb = renderPageTop() +
+            return renderPageTop() +
                     "<h3>Package is not installed!</h3>\n" +
                     "<br/><a href=\"http://localhost:8080\">All packages</a>" +
                     Renderer.renderPageBottom();
-            return sb;
         }
     }
 

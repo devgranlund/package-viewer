@@ -17,6 +17,13 @@ import devgranlund.util.FileReader;
  * @since 2019-06-10.
  */
 public class PackageService {
+    
+    private static final String PACKAGE = "Package:";
+    private static final String DESCRIPTION = "Description:";
+    private static final String DEPENDS = "Depends:";
+    
+    // Private constructor to hide the implicit public consturctor
+    private PackageService(){ }
 
     /**
      * Creates and returns list containing all package names.
@@ -30,7 +37,7 @@ public class PackageService {
         final FileReader fileReader = FileReader.newInstance(fileName, runsInProductionMode);
         Stream<String> stream = fileReader.getFileContentInStream();
         packageNames = stream
-                .filter(line -> line.startsWith("Package:"))
+                .filter(line -> line.startsWith(PACKAGE))
                 .map(line -> line.split("\\s+")[1])
                 .sorted()
                 .collect(Collectors.toList());
@@ -56,11 +63,11 @@ public class PackageService {
         Set<String> mainPackageDepends = new HashSet<>();
 
         for (String line : lines) {
-            if (line.startsWith("Package:")) {
+            if (line.startsWith(PACKAGE)) {
                 mainPackageName = getDataFromLine(line);
-            } else if (line.startsWith("Description:")) {
+            } else if (line.startsWith(DESCRIPTION)) {
                 mainPackageDescription = getDataFromLine(line);
-            } else if (line.startsWith("Depends:")) {
+            } else if (line.startsWith(DEPENDS)) {
                 mainPackageDepends = generateDependsSetFromLine(line);
             }
             // end of "package entry"
@@ -122,11 +129,11 @@ public class PackageService {
         Stream<String> stream = fileReader.getFileContentInStream();
         lines = stream
                 .filter(line ->
-                        line.startsWith("Package:")
+                        line.startsWith(PACKAGE)
                                 ||
-                                line.startsWith("Depends:")
+                                line.startsWith(DEPENDS)
                                 ||
-                                line.startsWith("Description:")
+                                line.startsWith(DESCRIPTION)
                                 ||
                                 line.length() == 0
                 )

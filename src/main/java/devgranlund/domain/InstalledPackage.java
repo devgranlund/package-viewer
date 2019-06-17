@@ -6,7 +6,6 @@ import java.util.Set;
 
 /**
  * Domain class for installed package. Class is immutable.
- * <p>
  * Design assumption is that the name of the package is unique in the OS context.
  *
  * @author tuomas.granlund@gmail.com
