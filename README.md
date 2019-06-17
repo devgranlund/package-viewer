@@ -9,7 +9,7 @@ Install and run program with 3 steps:
   
 You need to have git and vagrant installed on your host machine. Host machine should not use 8080 port for something 
 else at the seme time.  
-Program has been tested with VirtualBox provider. It should work with others as well, but this is not tested.  
+Program has been tested with VirtualBox provider, not sure if used box will work with any other provider.  
 
   
 You can use the API from your browser.  
